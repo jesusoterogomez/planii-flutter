@@ -24,11 +24,8 @@ class FeedItems extends StatelessWidget {
 
     return StreamBuilder(
       stream: bloc.plans,
+      initialData: [],
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData == false) {
-          return Container();
-        }
-
         List plans = snapshot.data;
 
         return ListView.builder(
@@ -62,7 +59,9 @@ class FeedItem extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Image.network(plan.coverImage),
+              plan.coverImage.isNotEmpty
+                  ? Image.network(plan.coverImage)
+                  : Container(),
               ListTile(
                 title: Text(plan.title),
                 subtitle: Text(plan.description),
