@@ -24,11 +24,16 @@ class PlansBloc {
   final Firestore _db = Firestore.instance;
 
   // Streams
+  Observable<QuerySnapshot> dbState;
   final plans = new BehaviorSubject();
 
   // Constructor
   PlansBloc() {
     getPlans();
+
+    // Reload plans on DB change
+    dbState = Observable(_db.collection(DB_COLLECTION).snapshots());
+    dbState.listen((data) => getPlans());
   }
 
   void getPlans([String filter]) async {
