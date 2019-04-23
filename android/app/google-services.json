@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "536059569164",
+    "firebase_url": "https://planii.firebaseio.com",
+    "project_id": "planii",
+    "storage_bucket": "planii.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536059569164:android:c69c535b7cf4fed2",
+        "android_client_info": {
+          "package_name": "com.planii.planii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536059569164-h12u9vumik0qisem6jbr14ltsu8oeefn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.planii.planii",
+            "certificate_hash": "7423e2550e86315525a7d1749ab66d755f2db0d6"
+          }
+        },
+        {
+          "client_id": "536059569164-u3cblqk91eve9ighlbtob8c9u0gvpi7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAujZWDoIlvkEwD4-Z6l2yuxqILS0wwIGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536059569164-u3cblqk91eve9ighlbtob8c9u0gvpi7g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "536059569164-suhjrtnm4kl86hmt0b3jevfqv6e0vodf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.planii.planii"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
