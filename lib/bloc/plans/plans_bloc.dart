@@ -3,6 +3,23 @@ import 'package:rxdart/rxdart.dart';
 
 const DB_COLLECTION = 'plans';
 
+class Plan {
+  String title;
+  String location;
+  String description;
+  String coverImage = '';
+
+  Plan.fromDB(data) {
+    title = data['title'];
+    location = data['location'];
+    description = data['description'];
+
+    if (data['coverImage'] != null) {
+      coverImage = data['coverImage']['downloadUrl'];
+    }
+  }
+}
+
 class PlansBloc {
   final Firestore _db = Firestore.instance;
 
@@ -14,13 +31,14 @@ class PlansBloc {
     getPlans();
   }
 
-  getPlans([String filter]) async {
+  void getPlans([String filter]) async {
     CollectionReference collection = _db.collection(DB_COLLECTION);
 
     QuerySnapshot snapshot = await collection.getDocuments();
 
     // Extract data from snapshots
-    Iterable data = snapshot.documents.map((DocumentSnapshot s) => s.data);
+    Iterable data =
+        snapshot.documents.map((DocumentSnapshot s) => new Plan.fromDB(s.data));
 
     plans.add(data.toList());
   }

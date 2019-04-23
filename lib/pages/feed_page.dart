@@ -48,7 +48,7 @@ class FeedItems extends StatelessWidget {
 }
 
 class FeedItem extends StatelessWidget {
-  final Map plan;
+  final Plan plan;
 
   // Constructor
   const FeedItem(this.plan);
@@ -62,10 +62,10 @@ class FeedItem extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              Image.network(plan.coverImage),
               ListTile(
-                // leading: Icon(Icons.album),
-                title: Text(plan['title']),
-                subtitle: Text(plan['description']),
+                title: Text(plan.title),
+                subtitle: Text(plan.description),
               ),
               ButtonTheme.bar(
                 // make buttons use the appropriate styles for cards
@@ -73,11 +73,11 @@ class FeedItem extends StatelessWidget {
                   children: <Widget>[
                     FlatButton(
                       child: const Text('Going'),
-                      onPressed: () {/* ... */},
+                      onPressed: () {/* .. */},
                     ),
                     FlatButton(
                       child: const Text('More...'),
-                      onPressed: () {/* ... */},
+                      onPressed: () {/* .. */},
                     ),
                   ],
                 ),
