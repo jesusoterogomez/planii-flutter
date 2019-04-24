@@ -5,7 +5,7 @@ class AuthProvider extends InheritedWidget {
   final AuthBloc bloc;
 
   AuthProvider({Key key, Widget child})
-      : bloc = AuthBloc(),
+      : bloc = authBloc,
         super(key: key, child: child);
 
   @override

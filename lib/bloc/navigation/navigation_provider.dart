@@ -5,7 +5,7 @@ class NavigationProvider extends InheritedWidget {
   final NavigationBloc bloc;
 
   NavigationProvider({Key key, Widget child})
-      : bloc = NavigationBloc(),
+      : bloc = navigationBloc,
         super(key: key, child: child);
 
   @override

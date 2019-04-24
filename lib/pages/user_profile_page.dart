@@ -27,9 +27,12 @@ class UserAvatar extends StatelessWidget {
 
     return StreamBuilder(
       stream: bloc.profile,
+      initialData: UserProfile(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == null || snapshot.data['avatarUrl'] == null) {
-          return new Container();
+        UserProfile profile = snapshot.data;
+
+        if (profile.uid == null) {
+          return Container();
         }
 
         return new Column(
@@ -37,8 +40,6 @@ class UserAvatar extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(
                 top: 40,
-                left: 100,
-                right: 100,
                 bottom: 20,
               ),
               child: Container(
@@ -50,22 +51,24 @@ class UserAvatar extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(999),
                   child: FadeInImage.memoryNetwork(
+                    width: 200,
+                    height: 200,
                     fit: BoxFit.cover,
                     placeholder: kTransparentImage,
-                    image: snapshot.data['avatarUrl'],
+                    image: profile.avatarUrl,
                   ),
                 ),
               ),
             ),
             new Text(
-              snapshot.data['displayName'],
+              profile.displayName,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
             new Text(
-              snapshot.data['email'],
+              profile.email,
               style: TextStyle(
                 fontSize: 14,
               ),

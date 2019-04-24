@@ -48,3 +48,6 @@ class PlansBloc {
     plans.add(data.toList());
   }
 }
+
+// Instantiate
+final PlansBloc plansBloc = PlansBloc();

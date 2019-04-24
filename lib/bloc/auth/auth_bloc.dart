@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
+import 'auth_models.dart';
 import 'auth_states.dart';
 
 class AuthBloc {
@@ -40,7 +41,7 @@ class AuthBloc {
 
     if (snapshot.exists) {
       currentUser();
-      return profile.add(snapshot.data);
+      return profile.add(UserProfile.fromDB(snapshot.data));
     }
 
     return profile.add({});
@@ -98,3 +99,6 @@ class AuthBloc {
     _auth.signOut();
   }
 }
+
+// Instantiate
+final AuthBloc authBloc = AuthBloc();

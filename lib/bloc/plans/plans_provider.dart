@@ -5,7 +5,7 @@ class PlansProvider extends InheritedWidget {
   final PlansBloc bloc;
 
   PlansProvider({Key key, Widget child})
-      : bloc = PlansBloc(),
+      : bloc = plansBloc,
         super(key: key, child: child);
 
   @override
