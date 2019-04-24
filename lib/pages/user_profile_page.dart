@@ -51,6 +51,9 @@ class UserAvatar extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(999),
                   child: FadeInImage.memoryNetwork(
+                    fadeInDuration: Duration(
+                      milliseconds: 300,
+                    ),
                     width: 200,
                     height: 200,
                     fit: BoxFit.cover,

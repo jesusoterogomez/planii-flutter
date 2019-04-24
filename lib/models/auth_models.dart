@@ -7,7 +7,9 @@ class UserProfile {
   String avatarUrl;
   Timestamp lastSeen;
 
-  UserProfile.fromDB(data) {
+  UserProfile.fromSnapshot(snapshot) {
+    Map data = snapshot.data;
+
     uid = data['uid'];
     email = data['email'];
     displayName = data['displayName'];

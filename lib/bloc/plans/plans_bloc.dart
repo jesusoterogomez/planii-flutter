@@ -1,23 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
-import 'plans_model.dart';
+import 'package:planii/models/plans_model.dart';
 
 const DB_COLLECTION = 'plans';
 
 class PlansBloc {
   final Firestore _db = Firestore.instance;
+  CollectionReference collection;
 
   // Streams
-  Observable<QuerySnapshot> dbState;
+  Observable<QuerySnapshot> collectionState;
+
   final plans = new BehaviorSubject();
 
   // Constructor
   PlansBloc() {
-    getPlans();
+    // Create reference to DB collection
+    collection = _db.collection(DB_COLLECTION);
 
     // Reload plans on DB change
-    dbState = Observable(_db.collection(DB_COLLECTION).snapshots());
-    dbState.listen((data) => getPlans());
+    _onCollectionChanged();
+
+    // Fetch data
+    getPlans();
+  }
+
+  void _onCollectionChanged() {
+    collectionState = Observable(collection.snapshots());
+    collectionState.listen((data) => getPlans());
   }
 
   void getPlans([String filter]) async {

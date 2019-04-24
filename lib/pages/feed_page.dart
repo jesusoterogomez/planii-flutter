@@ -24,6 +24,9 @@ class FeedItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = PlansProvider.of(context);
 
+    // Fetch data
+    bloc.getPlans();
+
     return StreamBuilder(
       stream: bloc.plans,
       initialData: [],
