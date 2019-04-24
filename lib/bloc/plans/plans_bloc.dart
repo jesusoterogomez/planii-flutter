@@ -1,24 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
+import 'plans_model.dart';
 
 const DB_COLLECTION = 'plans';
-
-class Plan {
-  String title;
-  String location;
-  String description;
-  String coverImage = '';
-
-  Plan.fromDB(data) {
-    title = data['title'];
-    location = data['location'];
-    description = data['description'];
-
-    if (data['coverImage'] != null) {
-      coverImage = data['coverImage']['downloadUrl'];
-    }
-  }
-}
 
 class PlansBloc {
   final Firestore _db = Firestore.instance;
@@ -43,7 +27,7 @@ class PlansBloc {
 
     // Extract data from snapshots
     Iterable data =
-        snapshot.documents.map((DocumentSnapshot s) => new Plan.fromDB(s.data));
+        snapshot.documents.map((DocumentSnapshot s) => Plan.fromSnapshot(s));
 
     plans.add(data.toList());
   }

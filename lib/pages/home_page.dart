@@ -27,11 +27,11 @@ class HomePage extends StatelessWidget {
                 title: new Text('Feed'),
               ),
               new BottomNavigationBarItem(
-                icon: new Icon(Icons.assessment),
-                title: new Text('Page 2'),
+                icon: new Icon(Icons.add_circle_outline),
+                title: new Text('Create new'),
               ),
               new BottomNavigationBarItem(
-                icon: new Icon(Icons.account_circle),
+                icon: new Icon(Icons.person_outline),
                 title: new Text('Profile'),
               ),
             ],

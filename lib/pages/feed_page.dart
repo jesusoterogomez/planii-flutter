@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:planii/bloc/plans.dart';
 
+import 'package:planii/pages/plan_details_page.dart';
+
 class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -59,10 +61,16 @@ class FeedItem extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              plan.coverImage.isNotEmpty
-                  ? Image.network(plan.coverImage)
+              plan.coverImage.downloadUrl.isNotEmpty
+                  ? Image.network(plan.coverImage.downloadUrl)
                   : Container(),
               ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PlanDetailsPage(plan: plan)));
+                },
                 title: Text(plan.title),
                 subtitle: Text(plan.description),
               ),
