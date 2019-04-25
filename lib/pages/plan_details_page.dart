@@ -245,36 +245,38 @@ class PlanGuests extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         Guests guests = snapshot.data;
 
-        return Column(
-            // children:
-            );
-        // print(
-        // '--- list received ${guestList['Kf82xvKRVkXVdOTjK92BeJtb3gj1'].answer}');
+        List<Widget> guestRows =
+            guests.list.map((Guest guest) => renderGuestRow(guest)).toList();
 
-        // return ListView.builder(
-        //   // Improve scroll performance in development mode.
-        //   // @see: https://github.com/flutter/flutter/issues/22314#issuecomment-427591926
-        //   physics: AlwaysScrollableScrollPhysics(),
-        //   scrollDirection: Axis.vertical,
-        //   shrinkWrap: true,
-        //   itemCount: guests.list.length,
-        //   itemBuilder: (BuildContext context, int index) {
-        //     Guest guest = guests.list[index];
-
-        //     return Text('${guest.displayName} ${guest.answer}');
-        //     // return FeedItem(plans[index]);
-        //   },
-        // );
-
-        // return Column(
-        //   children: <Widget>[
-        //     guests.map(new Text('Test'));
-        //     // PlanDetailsHeader(plan),
-        //     // PlanDetailsDescription(plan.description),
-        //     // PlanDetailsPeople(plan.),
-        //   ],
-        // );
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'People',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Column(
+                children: guestRows,
+              )
+            ],
+          ),
+        );
       },
     );
   }
+}
+
+Widget renderGuestRow(Guest guest) {
+  return ListTile(
+    contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+    leading: CircleAvatar(
+      backgroundImage: NetworkImage(guest.avatarUrl),
+    ),
+    title: Text(guest.displayName),
+    subtitle: Text(guest.answer),
+  );
 }
