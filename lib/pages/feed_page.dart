@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:planii/bloc/plans.dart';
-
 import 'package:planii/pages/plan_details_page.dart';
 
 class FeedPage extends StatelessWidget {
@@ -61,41 +60,64 @@ class FeedItem extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: Center(
         child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              plan.coverImage.downloadUrl.isNotEmpty
-                  ? Image.network(plan.coverImage.downloadUrl)
-                  : Container(),
-              ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PlanDetailsPage(plan: plan)));
-                },
-                title: Text(plan.title),
-                subtitle: Text(plan.description),
-              ),
-              ButtonTheme.bar(
-                // make buttons use the appropriate styles for cards
-                child: ButtonBar(
-                  children: <Widget>[
-                    FlatButton(
-                      child: const Text('Going'),
-                      onPressed: () {/* .. */},
-                    ),
-                    FlatButton(
-                      child: const Text('More...'),
-                      onPressed: () {/* .. */},
-                    ),
-                  ],
+          child: new GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PlanDetailsPage(plan: plan)));
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                FeedItemImage(plan.coverImage),
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(plan.author.avatarUrl),
+                  ),
+                  title: Text(plan.title),
+                  subtitle: Text(plan.description),
                 ),
-              ),
-            ],
+                ButtonTheme.bar(
+                  // make buttons use the appropriate styles for cards
+                  child: ButtonBar(
+                    children: <Widget>[
+                      FlatButton(
+                        child: const Text('Going'),
+                        onPressed: () {/* .. */},
+                      ),
+                      FlatButton(
+                        child: const Text('More...'),
+                        onPressed: () {/* .. */},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class FeedItemImage extends StatelessWidget {
+  final PlanCoverImage image;
+
+  FeedItemImage(this.image);
+
+  @override
+  Widget build(BuildContext context) {
+    const String placeholder = 'assets/images/event-placeholder-background.jpg';
+    if (image.downloadUrl.isEmpty) {
+      return Image.asset(placeholder);
+    }
+
+    return FadeInImage.assetNetwork(
+      fit: BoxFit.fill,
+      placeholder: placeholder,
+      image: image.downloadUrl,
     );
   }
 }

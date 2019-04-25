@@ -33,7 +33,12 @@ class PlansBloc {
   void getPlans([String filter]) async {
     CollectionReference collection = _db.collection(DB_COLLECTION);
 
-    QuerySnapshot snapshot = await collection.getDocuments();
+    QuerySnapshot snapshot = await collection
+        .orderBy(
+          'created',
+          descending: true,
+        )
+        .getDocuments();
 
     // Extract data from snapshots
     Iterable data =
