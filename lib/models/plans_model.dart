@@ -5,8 +5,8 @@ class Plan {
   String title;
   String location;
   String description;
-  Timestamp created;
-  Timestamp time;
+  DateTime created;
+  DateTime time;
   PlanAuthor author;
   PlanCoverImage coverImage;
 
@@ -17,8 +17,10 @@ class Plan {
     title = data['title'];
     location = data['location'];
     description = data['description'];
-    created = data['created'];
-    time = data['time'];
+
+    created = data['created'] != null ? data['created'].toDate() : null;
+    time = data['time'] != null ? data['time'].toDate() : null;
+
     author = PlanAuthor(data['author']);
     coverImage = PlanCoverImage(data['coverImage']);
   }
