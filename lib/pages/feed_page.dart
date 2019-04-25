@@ -63,9 +63,11 @@ class FeedItem extends StatelessWidget {
           child: new GestureDetector(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PlanDetailsPage(plan: plan)));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PlanDetailsPage(plan: plan),
+                ),
+              );
             },
             child: Column(
               mainAxisSize: MainAxisSize.min,

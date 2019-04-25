@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planii/bloc/plan_details.dart';
+import 'package:planii/bloc/analytics.dart';
 
 class PlanDetailsPage extends StatelessWidget {
   final Plan plan;
@@ -8,6 +9,12 @@ class PlanDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = AnalyticsProvider.of(context);
+
+    bloc.analytics.logEvent(
+      name: 'view_plan_details',
+    );
+
     return PlanDetailsProvider(
       planId: plan.id,
       child: new Scaffold(
