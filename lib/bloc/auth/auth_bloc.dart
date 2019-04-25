@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:planii/models/auth_models.dart';
+import 'package:planii/models/auth_model.dart';
 import 'auth_states.dart';
 
 class AuthBloc {

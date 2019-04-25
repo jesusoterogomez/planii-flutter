@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planii/bloc/plan_details.dart';
+import 'package:planii/bloc/guests.dart';
 import 'package:planii/bloc/analytics.dart';
 import 'package:intl/intl.dart';
 
@@ -18,8 +19,11 @@ class PlanDetailsPage extends StatelessWidget {
 
     return PlanDetailsProvider(
       planId: plan.id,
-      child: new Scaffold(
-        body: PlanDetailsBody(plan),
+      child: GuestsProvider(
+        planId: plan.id,
+        child: new Scaffold(
+          body: PlanDetailsBody(plan),
+        ),
       ),
     );
   }
@@ -44,6 +48,7 @@ class PlanDetailsBody extends StatelessWidget {
           children: <Widget>[
             PlanDetailsHeader(plan),
             PlanDetailsDescription(plan.description),
+            PlanGuests(),
             // PlanDetailsPeople(plan.),
           ],
         );
@@ -161,7 +166,6 @@ class PlanDateBox extends StatelessWidget {
           vertical: 6,
           horizontal: 10,
         ),
-        // margin: EdgeInsets.only(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -204,17 +208,73 @@ class PlanDetailsDescription extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Text(
-            'Description',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Description',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 10.0),
-          Text(description),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(description),
+              ),
+            ],
+          ),
           // Container(child: ,)
         ],
       ),
+    );
+  }
+}
+
+class PlanGuests extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = GuestsProvider.of(context);
+
+    return StreamBuilder(
+      stream: bloc.guests,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        Guests guests = snapshot.data;
+
+        return Column(
+            // children:
+            );
+        // print(
+        // '--- list received ${guestList['Kf82xvKRVkXVdOTjK92BeJtb3gj1'].answer}');
+
+        // return ListView.builder(
+        //   // Improve scroll performance in development mode.
+        //   // @see: https://github.com/flutter/flutter/issues/22314#issuecomment-427591926
+        //   physics: AlwaysScrollableScrollPhysics(),
+        //   scrollDirection: Axis.vertical,
+        //   shrinkWrap: true,
+        //   itemCount: guests.list.length,
+        //   itemBuilder: (BuildContext context, int index) {
+        //     Guest guest = guests.list[index];
+
+        //     return Text('${guest.displayName} ${guest.answer}');
+        //     // return FeedItem(plans[index]);
+        //   },
+        // );
+
+        // return Column(
+        //   children: <Widget>[
+        //     guests.map(new Text('Test'));
+        //     // PlanDetailsHeader(plan),
+        //     // PlanDetailsDescription(plan.description),
+        //     // PlanDetailsPeople(plan.),
+        //   ],
+        // );
+      },
     );
   }
 }
