@@ -45,13 +45,7 @@ class GuestsBloc {
   Future<String> getCurrentUserResponse(Guests guestList) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
 
-    // If guestlist is empty
-    if (guestList == null) {
-      return null;
-    }
-
-    // If current user is not in guest list
-    Guest _guest = guestList.map[user.uid];
+    Guest _guest = guestList.getGuest(user.uid);
     if (_guest == null) {
       return null;
     }

@@ -46,4 +46,12 @@ class Guests {
     list = <Guest>[];
     map = <String, Guest>{};
   }
+
+  getGuest(String uid) {
+    if (map.containsKey(uid)) {
+      return map[uid];
+    }
+
+    return null;
+  }
 }
