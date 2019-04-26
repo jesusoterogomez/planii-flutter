@@ -95,6 +95,10 @@ class AuthBloc {
     }, merge: true);
   }
 
+  getCurrentUser() {
+    return profile.value;
+  }
+
   void signOut() {
     _auth.signOut();
   }

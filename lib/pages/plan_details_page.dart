@@ -48,7 +48,8 @@ class PlanDetailsBody extends StatelessWidget {
           children: <Widget>[
             PlanDetailsHeader(plan),
             PlanDetailsDescription(plan.description),
-            PlanGuests(),
+            AttendanceButtons(),
+            PlanGuestList(),
             // PlanDetailsPeople(plan.),
           ],
         );
@@ -122,7 +123,7 @@ class PlanDetailsHeader extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      plan.location,
+                      plan.location ?? 'To be defined',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -153,6 +154,34 @@ class PlanDateBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (time == null) {
+      return new Card(
+        elevation: 2,
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 6,
+            horizontal: 10,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.date_range,
+                size: 18,
+              ),
+              SizedBox(width: 5.0),
+              Text(
+                'To be defined',
+                style: TextStyle(
+                    // fontSize: 22,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     // Date Formatting
     // @see https://docs.flutter.io/flutter/intl/DateFormat-class.html
     String weekday = (new DateFormat.E().format(time));
@@ -235,15 +264,20 @@ class PlanDetailsDescription extends StatelessWidget {
   }
 }
 
-class PlanGuests extends StatelessWidget {
+class PlanGuestList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = GuestsProvider.of(context);
 
     return StreamBuilder(
       stream: bloc.guests,
+      initialData: Guests.empty(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         Guests guests = snapshot.data;
+
+        if (guests.list.length == 0) {
+          return Container();
+        }
 
         List<Widget> guestRows =
             guests.list.map((Guest guest) => renderGuestRow(guest)).toList();
@@ -253,11 +287,15 @@ class PlanGuests extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                'People',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                children: <Widget>[
+                  Text(
+                    'People',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               Column(
                 children: guestRows,
@@ -279,4 +317,61 @@ Widget renderGuestRow(Guest guest) {
     title: Text(guest.displayName),
     subtitle: Text(guest.answer),
   );
+}
+
+class AttendanceButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = GuestsProvider.of(context);
+
+    return StreamBuilder(
+      stream: bloc.currentUserResponse,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        String answer = snapshot.data;
+
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Text(
+                    'Are you going?',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              ButtonBar(
+                mainAxisSize: MainAxisSize.max,
+                alignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // Text('data'),
+                  RaisedButton(
+                    onPressed: () => bloc.saveCurrentUserResponse('yes'),
+                    child: Text('Yes'),
+                  ),
+                  RaisedButton(
+                    onPressed: () => bloc.saveCurrentUserResponse('no'),
+                    child: Text('No'),
+                  ),
+                  RaisedButton(
+                    onPressed: () => bloc.saveCurrentUserResponse('maybe'),
+                    child: Text('Maybe'),
+                  ),
+                ],
+              ),
+              answer != null
+                  ? Text('You answered: $answer')
+                  : Text("You still haven't responded")
+            ],
+          ),
+        );
+      },
+    );
+
+    // },
+    // );
+  }
 }

@@ -24,12 +24,26 @@ class Guest {
 class Guests {
   // Map list;
   List<Guest> list = [];
+  Map<String, Guest> map = {};
 
   Guests.fromSnapshot(DocumentSnapshot snapshot) {
     Map data = snapshot.data;
 
+    if (data == null) {
+      Guests.empty();
+      return;
+    }
+    // Prepare List
     data.forEach(
       (key, value) => list.add(Guest(key, value)),
     );
+
+    // Prepare Map
+    map = data.map((key, value) => MapEntry(key, Guest(key, value)));
+  }
+
+  Guests.empty() {
+    list = <Guest>[];
+    map = <String, Guest>{};
   }
 }
