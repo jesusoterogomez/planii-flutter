@@ -43,14 +43,28 @@ class PlanDetailsBody extends StatelessWidget {
       initialData: cachedPlan,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         Plan plan = snapshot.data;
+        double headerHeight = MediaQuery.of(context).size.height * 0.4;
 
-        return Column(
-          children: <Widget>[
-            PlanDetailsHeader(plan),
-            PlanDetailsDescription(plan.description),
-            AttendanceButtons(),
-            PlanGuestList(),
-            // PlanDetailsPeople(plan.),
+        return CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              // title: Text('SliverAppBar'),
+              backgroundColor: Colors.transparent,
+              expandedHeight: headerHeight,
+              flexibleSpace: FlexibleSpaceBar(
+                background: PlanDetailsHeader(plan),
+                // background: Image.asset('assets/forest.jpg', fit: BoxFit.cover),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  PlanDetailsDescription(plan.description),
+                  AttendanceButtons(),
+                  PlanGuestList(),
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -65,13 +79,10 @@ class PlanDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double headerHeight = MediaQuery.of(context).size.height * 0.4;
-
     return Stack(
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(left: 10.0),
-          height: headerHeight,
           decoration: new BoxDecoration(
             image: new DecorationImage(
               image: plan.coverImage.downloadUrl.isNotEmpty
@@ -83,7 +94,7 @@ class PlanDetailsHeader extends StatelessWidget {
           ),
         ),
         Container(
-          height: headerHeight,
+          // height: headerHeight,
           padding: EdgeInsets.all(30.0),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 0.6)),
@@ -132,16 +143,6 @@ class PlanDetailsHeader extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          left: 16.0,
-          top: 50.0,
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back, color: Colors.white),
-          ),
-        )
       ],
     );
   }
@@ -257,7 +258,20 @@ class PlanDetailsDescription extends StatelessWidget {
               ),
             ],
           ),
-          // Container(child: ,)
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(description),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(description),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -372,9 +386,6 @@ class AttendanceButtons extends StatelessWidget {
         );
       },
     );
-
-    // },
-    // );
   }
 }
 
