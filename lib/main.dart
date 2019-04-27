@@ -16,7 +16,7 @@ class App extends StatelessWidget {
           child: MaterialApp(
             title: 'Planii',
             theme: new ThemeData(
-              primarySwatch: Colors.deepPurple,
+              primaryColor: Color.fromRGBO(61, 75, 240, 1),
             ),
             home: new RootPage(),
             debugShowCheckedModeBanner: false,

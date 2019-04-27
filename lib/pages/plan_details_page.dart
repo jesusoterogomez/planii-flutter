@@ -347,18 +347,20 @@ class AttendanceButtons extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 alignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // Text('data'),
-                  RaisedButton(
-                    onPressed: () => bloc.saveCurrentUserResponse('yes'),
-                    child: Text('Yes'),
+                  ResponseButton(
+                    response: 'yes',
+                    icon: Icons.check_circle_outline,
+                    currentAnswer: answer,
                   ),
-                  RaisedButton(
-                    onPressed: () => bloc.saveCurrentUserResponse('no'),
-                    child: Text('No'),
+                  ResponseButton(
+                    response: 'no',
+                    icon: Icons.close,
+                    currentAnswer: answer,
                   ),
-                  RaisedButton(
-                    onPressed: () => bloc.saveCurrentUserResponse('maybe'),
-                    child: Text('Maybe'),
+                  ResponseButton(
+                    response: 'maybe',
+                    icon: Icons.help_outline,
+                    currentAnswer: answer,
                   ),
                 ],
               ),
@@ -373,5 +375,58 @@ class AttendanceButtons extends StatelessWidget {
 
     // },
     // );
+  }
+}
+
+class ResponseButton extends StatelessWidget {
+  final String response;
+  final IconData icon;
+  final String currentAnswer;
+
+  ResponseButton({this.response, this.icon, this.currentAnswer});
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = GuestsProvider.of(context);
+
+    final double iconSize = 20;
+    final double buttonHeight = 36;
+    final double borderWidth = 2.0;
+    final Color primaryColor = Theme.of(context).primaryColor;
+
+    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+    final String labelText = capitalize(response);
+
+    if (response == currentAnswer) {
+      return ButtonTheme(
+        height: buttonHeight + borderWidth,
+        child: FlatButton.icon(
+          icon: Icon(
+            icon,
+            size: iconSize,
+          ),
+          color: primaryColor,
+          textColor: Colors.white,
+          onPressed: () => (),
+          label: Text(labelText),
+        ),
+      );
+    }
+    return ButtonTheme(
+      height: buttonHeight,
+      child: OutlineButton.icon(
+        icon: Icon(
+          icon,
+          size: iconSize,
+        ),
+        borderSide: BorderSide(
+          color: primaryColor,
+          width: borderWidth,
+        ),
+        textColor: primaryColor,
+        label: Text(labelText),
+        onPressed: () => bloc.saveCurrentUserResponse(response),
+      ),
+    );
   }
 }

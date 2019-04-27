@@ -45,7 +45,8 @@ class UserAvatar extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.deepPurple, width: 8.0),
+                  border: Border.all(
+                      color: Theme.of(context).primaryColor, width: 8.0),
                   shape: BoxShape.circle,
                 ),
                 child: ClipRRect(
