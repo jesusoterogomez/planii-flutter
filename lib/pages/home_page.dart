@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:planii/bloc/navigation.dart';
 import 'package:planii/pages/user_profile_page.dart';
 import 'package:planii/pages/feed_page.dart';
+import 'package:planii/pages/create_plan_page.dart';
+
+enum Routes {
+  feed,
+  create_new,
+  profile,
+}
 
 class HomePage extends StatelessWidget {
   @override
@@ -16,11 +23,11 @@ class HomePage extends StatelessWidget {
 
         return Scaffold(
           body: Center(
-            child: getRoute(tabIndex),
+            child: getRoute(tabIndex, context),
           ),
           bottomNavigationBar: new BottomNavigationBar(
             currentIndex: tabIndex,
-            onTap: bloc.updateCurrentTab,
+            onTap: (int index) => updateTab(index, bloc, context),
             items: <BottomNavigationBarItem>[
               new BottomNavigationBarItem(
                 icon: new Icon(Icons.format_list_bulleted),
@@ -42,13 +49,29 @@ class HomePage extends StatelessWidget {
   }
 }
 
-Widget getRoute(int routeIndex) {
-  switch (routeIndex) {
-    case 0:
+void updateTab(int routeIndex, NavigationBloc bloc, BuildContext context) {
+  Routes _route = Routes.values[routeIndex];
+
+  // The create_new route will redirect to a new page instead of navigating in tabs
+  if (_route == Routes.create_new) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreatePlanPage(),
+      ),
+    );
+
+    return null;
+  }
+
+  return bloc.updateCurrentTab(routeIndex);
+}
+
+Widget getRoute(int routeIndex, context) {
+  switch (Routes.values[routeIndex]) {
+    case Routes.feed:
       return new FeedPage();
-    case 1:
-      return new Text("Page $routeIndex");
-    case 2:
+    case Routes.profile:
       return new UserProfilePage();
     default:
       return new Text("Not found! $routeIndex");

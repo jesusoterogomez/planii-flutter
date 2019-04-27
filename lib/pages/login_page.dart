@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:planii/bloc/auth.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({this.onAuthentication});
-
-  final VoidCallback onAuthentication;
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
