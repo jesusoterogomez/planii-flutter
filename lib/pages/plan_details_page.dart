@@ -62,9 +62,6 @@ class PlanDetailsBody extends StatelessWidget {
                   PlanDetailsDescription(plan.description),
                   AttendanceButtons(),
                   PlanGuestList(),
-                  Container(
-                    height: 100,
-                  ) // Padding at bottom of scrollable items
                 ],
               ),
             ),
