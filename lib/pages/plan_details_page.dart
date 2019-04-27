@@ -62,6 +62,9 @@ class PlanDetailsBody extends StatelessWidget {
                   PlanDetailsDescription(plan.description),
                   AttendanceButtons(),
                   PlanGuestList(),
+                  Container(
+                    height: 100,
+                  ) // Padding at bottom of scrollable items
                 ],
               ),
             ),
@@ -174,9 +177,6 @@ class PlanDateBox extends StatelessWidget {
               SizedBox(width: 5.0),
               Text(
                 'To be defined',
-                style: TextStyle(
-                    // fontSize: 22,
-                    ),
               ),
             ],
           ),
@@ -251,20 +251,6 @@ class PlanDetailsDescription extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.0),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(description),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(description),
-              ),
-            ],
-          ),
           Row(
             children: <Widget>[
               Expanded(
