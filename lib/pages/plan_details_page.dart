@@ -407,7 +407,7 @@ class ResponseButton extends StatelessWidget {
           ),
           color: primaryColor,
           textColor: Colors.white,
-          onPressed: () => (),
+          onPressed: () => ({}),
           label: Text(labelText),
         ),
       );
