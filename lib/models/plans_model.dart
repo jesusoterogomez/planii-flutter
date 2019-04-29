@@ -24,6 +24,20 @@ class Plan {
     author = PlanAuthor(data['author']);
     coverImage = PlanCoverImage(data['coverImage']);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'location': location,
+      'description': description,
+      'created': created,
+      'time': time,
+      'author': author,
+      'coverImage': coverImage,
+    };
+  }
+
+  Plan();
 }
 
 class PlanCoverImage {

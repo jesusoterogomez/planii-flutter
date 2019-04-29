@@ -10,8 +10,9 @@ class PlansBloc {
 
   // Streams
   Observable<QuerySnapshot> collectionState;
+  Observable<QuerySnapshot> newPlanState;
 
-  final plans = new BehaviorSubject();
+  final plans = new BehaviorSubject<List<Plan>>();
 
   // Constructor
   PlansBloc() {
@@ -41,10 +42,11 @@ class PlansBloc {
         .getDocuments();
 
     // Extract data from snapshots
-    Iterable data =
-        snapshot.documents.map((DocumentSnapshot s) => Plan.fromSnapshot(s));
+    Iterable<Plan> data = snapshot.documents.map(
+      (DocumentSnapshot s) => Plan.fromSnapshot(s),
+    );
 
-    plans.add(data.toList());
+    plans.add(List<Plan>.from(data));
   }
 }
 
