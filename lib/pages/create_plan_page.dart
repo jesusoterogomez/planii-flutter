@@ -10,7 +10,6 @@ class CreatePlanPage extends StatelessWidget {
           title: Text('Create a new plan'),
         ),
         body: Container(
-          padding: EdgeInsets.all(30),
           child: CreatePlanForm(),
         ),
       ),
@@ -26,22 +25,30 @@ class CreatePlanForm extends StatefulWidget {
 class _CreatePlanFormState extends State<CreatePlanForm> {
   final titleController = TextEditingController();
   final locationController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final timeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final bloc = NewPlanProvider.of(context);
-    final double formSpacing = 20;
+    final double formSpacing = 30;
     final double labelSpacing = formSpacing / 2;
-    titleController.text = bloc.plan.value.title;
-    locationController.text = bloc.plan.value.location;
+
+    final Plan plan = bloc.plan.value;
+    titleController.text = plan.title;
+    locationController.text = plan.location;
+    descriptionController.text = plan.description;
 
     return StreamBuilder(
       stream: bloc.plan,
-      initialData: bloc.plan,
+      initialData: bloc.plan.value,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         Plan data = snapshot.data;
 
+        print(data.toMap());
+
         return ListView(
+          padding: EdgeInsets.all(30),
           children: <Widget>[
             Text(data.toMap().toString()),
             SizedBox(height: formSpacing),
@@ -69,28 +76,57 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
             SizedBox(height: formSpacing),
             Text('When are you expecting your guests to arrive?'),
             SizedBox(height: labelSpacing),
-            TextField(
-              controller: locationController,
-              decoration: InputDecoration(
-                labelText: 'Location',
-                border: OutlineInputBorder(),
+            // Avoid exception when keyboard focuses date-time input
+            // @see https://github.com/flutter/flutter/issues/18672
+            SingleChildScrollView(
+              child: GestureDetector(
+                onTap: () => selectEventTime(context, bloc.setPlanTime),
+                child: AbsorbPointer(
+                  child: TextField(
+                    controller: TextEditingController(
+                      text: bloc.plan.value.time.toString(),
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Date and time of event',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
               ),
-              onChanged: bloc.setPlanLocation,
             ),
             SizedBox(height: formSpacing),
             Text('Tell your guests what this is about'),
             SizedBox(height: labelSpacing),
             TextField(
-              controller: locationController,
+              controller: descriptionController,
               decoration: InputDecoration(
-                labelText: 'Location',
+                labelText: 'Description',
                 border: OutlineInputBorder(),
               ),
-              onChanged: bloc.setPlanLocation,
+              // onChanged: bloc.setPlanDescription,
             ),
+            // MaterialButton(
+            //   onPressed: () {
+            //     bloc.resetPlan();
+            //   },
+            //   child: Text('Reset'),
+            // ),
           ],
         );
       },
     );
   }
+}
+
+Future selectEventTime(BuildContext context, Function callback) async {
+  DateTime eventTime = await showDatePicker(
+    context: context,
+    firstDate: DateTime.now(),
+    initialDate: DateTime.now().add(Duration(hours: 1)),
+    lastDate: DateTime.now().add(
+      Duration(days: 365 * 2),
+    ),
+  );
+
+  return callback(eventTime);
 }

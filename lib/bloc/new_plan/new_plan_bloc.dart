@@ -12,7 +12,7 @@ class NewPlanBloc {
   // Observable<QuerySnapshot> collectionState;
 
   // Stores values for new plan being created.
-  final plan = new BehaviorSubject<Plan>();
+  final plan = new BehaviorSubject<Plan>.seeded(new Plan());
   Plan planData = new Plan();
   // final newPlanState = new BehaviorSubject<Plan>();
 
@@ -25,7 +25,6 @@ class NewPlanBloc {
     // _onCollectionChanged();
 
     // Fetch data
-    // getPlans();
   }
 
   void resetPlan() {
@@ -44,20 +43,27 @@ class NewPlanBloc {
 
   void setPlanTitle(String title) {
     planData.title = title;
+    _updatePlan();
+  }
 
+  void setPlanDescription(String description) {
+    planData.description = description;
     _updatePlan();
   }
 
   void setPlanLocation(String location) {
     planData.location = location;
+    _updatePlan();
+  }
 
+  void setPlanTime(DateTime time) {
+    planData.time = time;
     _updatePlan();
   }
 
   void createPlan() async {
-    // Map data = Map.from(plan.value);
-
-    // var t = await collection.add(data);
+    Map data = planData.toMap();
+    await collection.add(data);
   }
 }
 
