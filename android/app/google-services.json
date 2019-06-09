@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "536059569164-gsupcol91tp5806btpo5p7er90tfks6v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.planii.planii",
+            "certificate_hash": "1ae8cf250d04197ffa6226d90be040ff0cb34250"
+          }
+        },
+        {
           "client_id": "536059569164-h12u9vumik0qisem6jbr14ltsu8oeefn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
