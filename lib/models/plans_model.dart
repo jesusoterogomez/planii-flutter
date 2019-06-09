@@ -32,7 +32,7 @@ class Plan {
       'description': description,
       'created': created,
       'time': time,
-      'author': author,
+      'author': author != null ? author.toMap() : null,
       'coverImage': coverImage,
     };
   }
@@ -63,5 +63,13 @@ class PlanAuthor {
     this.uid = data['uid'];
     this.displayName = data['displayName'];
     this.avatarUrl = data['avatarUrl'];
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'uid': uid,
+      'displayName': displayName,
+      'avatarUrl': avatarUrl,
+    };
   }
 }

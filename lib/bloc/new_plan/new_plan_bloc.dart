@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:planii/models/plans_model.dart';
+import 'new_plan_states.dart';
 
 const DB_COLLECTION = 'plans';
 
@@ -9,61 +11,62 @@ class NewPlanBloc {
   CollectionReference collection;
 
   // Streams
-  // Observable<QuerySnapshot> collectionState;
-
   // Stores values for new plan being created.
   final plan = new BehaviorSubject<Plan>.seeded(new Plan());
-  Plan planData = new Plan();
-  // final newPlanState = new BehaviorSubject<Plan>();
+
+  BehaviorSubject status = BehaviorSubject(); // authentication status
 
   // Constructor
   NewPlanBloc() {
     // Create reference to DB collection
     collection = _db.collection(DB_COLLECTION);
-
-    // Reload plans on DB change
-    // _onCollectionChanged();
-
-    // Fetch data
+    status.add(NewPlanStatus.initialized);
   }
 
   void resetPlan() {
-    Plan planData = new Plan();
-    plan.add(planData);
+    plan.add(new Plan());
   }
-
-  void _updatePlan() {
-    plan.add(planData);
-  }
-
-  // void _onCollectionChanged() {
-  //   collectionState = Observable(collection.snapshots());
-  //   collectionState.listen((data) => getPlans());
-  // }
 
   void setPlanTitle(String title) {
-    planData.title = title;
-    _updatePlan();
+    plan.value.title = title;
+    plan.add(plan.value);
   }
 
   void setPlanDescription(String description) {
-    planData.description = description;
-    _updatePlan();
+    plan.value.description = description;
+    plan.add(plan.value);
   }
 
   void setPlanLocation(String location) {
-    planData.location = location;
-    _updatePlan();
+    plan.value.location = location;
+    plan.add(plan.value);
   }
 
   void setPlanTime(DateTime time) {
-    planData.time = time;
-    _updatePlan();
+    plan.value.time = time;
+    plan.add(plan.value);
+  }
+
+  Future<PlanAuthor> getAuthorDetails() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+    return PlanAuthor({
+      'uid': user.uid,
+      'avatarUrl': user.photoUrl,
+      'displayName': user.displayName
+    });
   }
 
   void createPlan() async {
-    Map data = planData.toMap();
+    status.add(NewPlanStatus.creating);
+    plan.value.author = await getAuthorDetails();
+
+    Map data = plan.value.toMap();
+
+    print('Added plan: $data');
     await collection.add(data);
+
+    status.add(NewPlanStatus.created);
   }
 }
 
