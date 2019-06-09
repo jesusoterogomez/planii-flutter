@@ -45,10 +45,11 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         Plan data = snapshot.data;
 
-        print(data.toMap());
-
         return ListView(
-          padding: EdgeInsets.all(30),
+          padding: EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 30,
+          ),
           children: <Widget>[
             Text(data.toMap().toString()),
             SizedBox(height: formSpacing),
@@ -103,14 +104,21 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
                 labelText: 'Description',
                 border: OutlineInputBorder(),
               ),
-              // onChanged: bloc.setPlanDescription,
+              onChanged: bloc.setPlanDescription,
             ),
-            // MaterialButton(
-            //   onPressed: () {
-            //     bloc.resetPlan();
-            //   },
-            //   child: Text('Reset'),
-            // ),
+            SizedBox(height: formSpacing),
+            MaterialButton(
+              padding: EdgeInsets.all(16),
+              onPressed: () => bloc.createPlan(),
+              color: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              child: Text(
+                'Create Plan',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
           ],
         );
       },
