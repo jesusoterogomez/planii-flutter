@@ -59,8 +59,11 @@ class NewPlanBloc {
 
   void createPlan() async {
     status.add(NewPlanStatus.creating);
-    plan.value.author = await getAuthorDetails();
 
+    plan.value.author = await getAuthorDetails();
+    plan.value.created = DateTime.now();
+
+    // Prepare to send data
     Map data = plan.value.toMap();
 
     print('Added plan: $data');
