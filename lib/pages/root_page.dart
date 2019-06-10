@@ -3,6 +3,7 @@ import 'package:planii/bloc/auth.dart';
 
 // Pages
 import 'package:planii/pages/login_page.dart';
+import 'package:planii/pages/login_failed_page.dart';
 import 'package:planii/pages/loading_page.dart';
 import 'package:planii/pages/splash_page.dart';
 import 'package:planii/pages/home_page.dart';
@@ -21,6 +22,8 @@ class RootPage extends StatelessWidget {
         switch (authStatus) {
           case AuthStatus.uninitialized:
             return new SplashPage();
+          case AuthStatus.failed:
+            return new LoginFailedPage();
           case AuthStatus.loading:
             return new LoadingPage();
           case AuthStatus.authenticated:

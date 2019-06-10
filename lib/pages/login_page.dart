@@ -10,19 +10,11 @@ class LoginPage extends StatelessWidget {
     height: 34,
   );
 
-  // final Widget partySVG = new SvgPicture.asset(
-  //   'assets/images/party.svg',
-  //   semanticsLabel: 'Party',
-  // );
-
   final AssetImage patternBg = new AssetImage("assets/images/pattern.jpg");
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      // appBar: AppBar(
-      // title: Text('Log in to Planii'),
-      // ),
       body: Container(
         decoration: new BoxDecoration(
           image: new DecorationImage(
@@ -39,7 +31,6 @@ class LoginPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               logoSVG,
-              // partySVG,
               Expanded(
                 flex: 5,
                 child: Image(

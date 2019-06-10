@@ -50,7 +50,19 @@ class AuthBloc {
   Future<FirebaseUser> googleSignIn() async {
     status.add(AuthStatus.loading);
 
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAccount googleUser;
+
+    try {
+      googleUser = await _googleSignIn.signIn();
+    } catch (exception, stacktrace) {
+      status.add(AuthStatus.failed);
+
+      print('Unhandled exception $exception');
+      print(stacktrace);
+
+      return null;
+    }
+
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
 
@@ -101,6 +113,11 @@ class AuthBloc {
 
   void signOut() {
     _auth.signOut();
+  }
+
+  void resetState() {
+    status.add(AuthStatus.unauthenticated);
+    profile.add({});
   }
 }
 
