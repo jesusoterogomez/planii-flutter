@@ -10,9 +10,45 @@ class CreatePlanPage extends StatelessWidget {
           title: Text('Create a new plan'),
         ),
         body: Container(
-          child: CreatePlanForm(),
+          // child: CreatePlanForm(),
+          child: CreatePlanContainer(),
         ),
       ),
+    );
+  }
+}
+
+class CreatePlanContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bloc = NewPlanProvider.of(context);
+
+    // Close creation modal when the plan has been fully created
+    void handleNavigation(NewPlanStatus status) {
+      if (status == NewPlanStatus.created) {
+        Navigator.pop(context);
+      }
+    }
+
+    bloc.status.listen((status) => handleNavigation(status));
+
+    return StreamBuilder(
+      stream: bloc.status,
+      initialData: bloc.status.value,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        NewPlanStatus status = snapshot.data;
+
+        switch (status) {
+          case NewPlanStatus.creating:
+            return Text('Creating');
+            break;
+          case NewPlanStatus.created:
+            return Text('Created');
+            break;
+          default:
+            return CreatePlanForm();
+        }
+      },
     );
   }
 }

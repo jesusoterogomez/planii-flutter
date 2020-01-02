@@ -58,6 +58,7 @@ void updateTab(int routeIndex, NavigationBloc bloc, BuildContext context) {
       context,
       MaterialPageRoute(
         builder: (context) => CreatePlanPage(),
+        fullscreenDialog: true,
       ),
     );
 

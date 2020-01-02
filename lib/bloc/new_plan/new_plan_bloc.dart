@@ -70,6 +70,10 @@ class NewPlanBloc {
     await collection.add(data);
 
     status.add(NewPlanStatus.created);
+
+    // Wait for a couple of seconds to display success message
+
+    status.add(NewPlanStatus.initialized);
   }
 }
 
