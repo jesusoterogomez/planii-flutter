@@ -107,7 +107,7 @@ class PlanDetailsHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Container(
-                child: PlanDateBox(plan.time),
+                child: PlanDateBox(plan.startTime),
               ),
               SizedBox(height: 10.0),
               Text(

@@ -6,7 +6,8 @@ class Plan {
   String location;
   String description;
   DateTime created;
-  DateTime time;
+  DateTime startTime;
+  DateTime endTime;
   PlanAuthor author;
   PlanCoverImage coverImage;
 
@@ -19,7 +20,8 @@ class Plan {
     description = data['description'];
 
     created = data['created'] != null ? data['created'].toDate() : null;
-    time = data['time'] != null ? data['time'].toDate() : null;
+    startTime = data['startTime'] != null ? data['startTime'].toDate() : null;
+    endTime = data['endTime'] != null ? data['endTime'].toDate() : null;
 
     author = PlanAuthor(data['author']);
     coverImage = PlanCoverImage(data['coverImage']);
@@ -31,7 +33,8 @@ class Plan {
       'location': location,
       'description': description,
       'created': created,
-      'time': time,
+      'startTime': startTime,
+      'endTime': endTime,
       'author': author != null ? author.toMap() : null,
       'coverImage': coverImage,
     };

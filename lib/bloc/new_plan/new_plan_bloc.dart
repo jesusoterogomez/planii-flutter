@@ -42,8 +42,13 @@ class NewPlanBloc {
     plan.add(plan.value);
   }
 
-  void setPlanTime(DateTime time) {
-    plan.value.time = time;
+  void setPlanStartTime(DateTime startTime) {
+    plan.value.startTime = startTime;
+    plan.add(plan.value);
+  }
+
+  void setPlanEndTime(DateTime endTime) {
+    plan.value.endTime = endTime;
     plan.add(plan.value);
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:planii/bloc/new_plan.dart';
+import 'package:planii/widgets/event_dates.dart';
 
 class CreatePlanPage extends StatelessWidget {
   @override
@@ -67,7 +68,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   @override
   Widget build(BuildContext context) {
     final bloc = NewPlanProvider.of(context);
-    final double formSpacing = 30;
+    final double formSpacing = 20;
     final double labelSpacing = formSpacing / 2;
 
     final Plan plan = bloc.plan.value;
@@ -79,15 +80,15 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
       stream: bloc.plan,
       initialData: bloc.plan.value,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        Plan data = snapshot.data;
+        // Plan data = snapshot.data;
 
         return ListView(
           padding: EdgeInsets.symmetric(
             horizontal: 30,
-            vertical: 30,
+            vertical: 0,
           ),
           children: <Widget>[
-            Text(data.toMap().toString()),
+            // Text(data.toMap().toString()),
             SizedBox(height: formSpacing),
             Text('Start by giving a name to your event'),
             SizedBox(height: labelSpacing),
@@ -111,26 +112,29 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
               onChanged: bloc.setPlanLocation,
             ),
             SizedBox(height: formSpacing),
-            Text('When are you expecting your guests to arrive?'),
+            Text('Date'),
             SizedBox(height: labelSpacing),
+            EventDates(
+              onStartDateChange: bloc.setPlanStartTime,
+            ),
             // Avoid exception when keyboard focuses date-time input
             // @see https://github.com/flutter/flutter/issues/18672
-            SingleChildScrollView(
-              child: GestureDetector(
-                onTap: () => selectEventTime(context, bloc.setPlanTime),
-                child: AbsorbPointer(
-                  child: TextField(
-                    controller: TextEditingController(
-                      text: bloc.plan.value.time.toString(),
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Date and time of event',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // SingleChildScrollView(
+            //   child: GestureDetector(
+            //     onTap: () => selectEventDate(context, bloc.setPlanTime),
+            //     child: AbsorbPointer(
+            //       child: TextField(
+            //         controller: TextEditingController(
+            //           text: bloc.plan.value.time.toString(),
+            //         ),
+            //         decoration: InputDecoration(
+            //           labelText: 'Date of the event',
+            //           border: OutlineInputBorder(),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: formSpacing),
             Text('Tell your guests what this is about'),
             SizedBox(height: labelSpacing),
@@ -162,7 +166,7 @@ class _CreatePlanFormState extends State<CreatePlanForm> {
   }
 }
 
-Future selectEventTime(BuildContext context, Function callback) async {
+Future selectEventDate(BuildContext context, Function callback) async {
   DateTime eventTime = await showDatePicker(
     context: context,
     firstDate: DateTime.now(),
