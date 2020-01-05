@@ -12,8 +12,6 @@ class GuestsProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   static GuestsBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(GuestsProvider)
-            as GuestsProvider)
-        .bloc;
+    return (context.dependOnInheritedWidgetOfExactType<GuestsProvider>()).bloc;
   }
 }

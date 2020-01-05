@@ -12,8 +12,7 @@ class AnalyticsProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   static AnalyticsBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(AnalyticsProvider)
-            as AnalyticsProvider)
+    return (context.dependOnInheritedWidgetOfExactType<AnalyticsProvider>())
         .bloc;
   }
 }

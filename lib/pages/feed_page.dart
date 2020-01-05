@@ -80,21 +80,21 @@ class FeedItem extends StatelessWidget {
                   title: Text(plan.title),
                   subtitle: Text(plan.description),
                 ),
-                ButtonTheme.bar(
-                  // make buttons use the appropriate styles for cards
-                  child: ButtonBar(
-                    children: <Widget>[
-                      FlatButton(
-                        child: const Text('Going'),
-                        onPressed: () {/* .. */},
-                      ),
-                      FlatButton(
-                        child: const Text('More...'),
-                        onPressed: () {/* .. */},
-                      ),
-                    ],
-                  ),
-                ),
+                // ButtonTheme.bar(
+                //   // make buttons use the appropriate styles for cards
+                //   child: ButtonBar(
+                //     children: <Widget>[
+                //       FlatButton(
+                //         child: const Text('Going'),
+                //         onPressed: () {/* .. */},
+                //       ),
+                //       FlatButton(
+                //         child: const Text('More...'),
+                //         onPressed: () {/* .. */},
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

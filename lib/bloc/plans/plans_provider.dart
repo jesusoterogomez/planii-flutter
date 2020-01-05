@@ -12,8 +12,6 @@ class PlansProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   static PlansBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(PlansProvider)
-            as PlansProvider)
-        .bloc;
+    return (context.dependOnInheritedWidgetOfExactType<PlansProvider>()).bloc;
   }
 }

@@ -12,8 +12,7 @@ class NavigationProvider extends InheritedWidget {
   bool updateShouldNotify(InheritedWidget oldWidget) => true;
 
   static NavigationBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(NavigationProvider)
-            as NavigationProvider)
+    return (context.dependOnInheritedWidgetOfExactType<NavigationProvider>())
         .bloc;
   }
 }
